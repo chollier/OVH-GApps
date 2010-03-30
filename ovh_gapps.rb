@@ -59,6 +59,14 @@ class GApps
       end
     end
   end
+  
+  def addAppsRecord
+    apps = ['docs', 'agenda', 'mail']
+    apps.each do |x|
+      @soapi.zoneEntryAddCustom(@session, @domain, 'CNAME', 'CUSTOM', '', x, '', 'ghs.google.com', '')
+      puts "#{x}.#{@domain} created"
+    end
+  end
 
 end
 
@@ -75,10 +83,11 @@ if ARGV.length == 3
   end
 
   #you can use it like that :
-  prout = GApps.new($login, $password, $domain)
+   prout = GApps.new($login, $password, $domain)
   # prout.getMXs
-  prout.delAllMXs
-  prout.addGoogleMXs
+   prout.delAllMXs
+   prout.addGoogleMXs
+   prout.addAppsRecord
 
 else
   puts "USAGE : ./ovh_gapps.rb [login] [password] [domain]"
